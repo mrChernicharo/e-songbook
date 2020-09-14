@@ -1,32 +1,183 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+
+const data = [
+	{
+		_id: 1,
+		composer: "Tom Jobim",
+		key: "Bb",
+		name: "Samba De Uma Nota",
+		style: "Bossa Nova",
+		tempo: 112,
+	},
+	{
+		_id: 2,
+		composer: "Chick Corea",
+		key: "Em",
+		name: "500 Miles High",
+		style: "Latin Jazz",
+		tempo: 130,
+	},
+	{
+		_id: 3,
+		composer: "Caetano Veloso",
+		key: "Dm",
+		name: "Qualquer Coisa",
+		style: "Mpb",
+		tempo: 92,
+	},
+	{
+		_id: 4,
+		composer: "Compay Segundo",
+		key: "Dm",
+		name: "Lagrimas Negras",
+		style: "Son Cubano",
+		tempo: 106,
+	},
+	{
+		_id: 5,
+		composer: "Zé Keti",
+		key: "D",
+		name: "Diz Que Fui Por Aí",
+		style: "Samba",
+		tempo: 96,
+	},
+	{
+		_id: 6,
+		composer: "John Coltrane",
+		key: "Eb",
+		name: "Giant Steps",
+		style: "Jazz Bebop",
+		tempo: 220,
+	},
+	{
+		_id: 7,
+		composer: "Tom Jobim",
+		key: "Bb",
+		name: "Triste",
+		style: "Bossa Nova",
+		tempo: 106,
+	},
+	{
+		_id: 8,
+		composer: "Edu Lobo",
+		key: "Dm",
+		name: "Casa Forte",
+		style: "Baião Jazz",
+		tempo: 136,
+	},
+	{
+		_id: 9,
+		composer: "Hermeto Pascoal",
+		key: "Dm",
+		name: "Forró Brasil",
+		style: "Baião Jazz",
+		tempo: 120,
+	},
+	{
+		_id: 10,
+		composer: "Kiko Horta",
+		key: "Am",
+		name: "Forró Transcendental",
+		style: "Baião Jazz",
+		tempo: 100,
+	},
+	{
+		_id: 11,
+		composer: "Sivuca",
+		key: "G",
+		name: "Um Tom Pra Jobim",
+		style: "Forró Choro",
+		tempo: 110,
+	},
+	{
+		_id: 12,
+		composer: "Hamilton De Holanda",
+		key: "Gm",
+		name: "Xote Do Almeidinha",
+		style: "Xote",
+		tempo: 78,
+	},
+	{
+		_id: 13,
+		composer: "Sivuca",
+		key: "Am",
+		name: "Feira De Mangaio",
+		style: "Baião ",
+		tempo: 110,
+	},
+	{
+		_id: 14,
+		composer: "Hermeto Pascoal",
+		key: "G",
+		name: "Forró Pela Manhã",
+		style: "Baião Jazz",
+		tempo: 100,
+	},
+	{
+		_id: 15,
+		composer: "Edu Lobo",
+		key: "Em",
+		name: "Ponteio ",
+		style: "Baião Jazz",
+		tempo: 120,
+	},
+	{
+		_id: 16,
+		composer: "Paulinho Da Viola",
+		key: "D",
+		name: "Argumento",
+		style: "Samba",
+		tempo: 94,
+	},
+	{
+		_id: 17,
+		composer: "Muhamad Al Wahab",
+		key: "Gm",
+		name: "Khatwat Habibi",
+		style: "Sirto",
+		tempo: 90,
+	},
+	{
+		_id: 18,
+		composer: "Paco De Lucia",
+		key: "E",
+		name: "Barrio La Viña",
+		style: "Flamenco",
+		tempo: 90,
+	},
+	{
+		_id: 19,
+		composer: "Compay Segundo",
+		key: "Am",
+		name: "Candela",
+		style: "Son Cubano",
+		tempo: 108,
+	},
+	{
+		_id: 20,
+		composer: "Pancho Amat",
+		key: "E",
+		name: "No Me Quieras Tanto",
+		style: "Son Cubano",
+		tempo: 110,
+	},
+	{
+		_id: 21,
+		composer: "John Coltrane",
+		key: "Ab",
+		name: "Naima",
+		style: "Jazz Balad",
+		tempo: 72,
+	},
+];
 
 @Component({
-  selector: 'app-root',
-  template: `
-    <!--The content below is only a placeholder and can be replaced.-->
-    <div style="text-align:center" class="content">
-      <h1>
-        Welcome to {{title}}!
-      </h1>
-      <span style="display: block">{{ title }} app is running!</span>
-      <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-    </div>
-    <h2>Here are some links to help you start: </h2>
-    <ul>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-      </li>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-      </li>
-      <li>
-        <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-      </li>
-    </ul>
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+	selector: "app-root",
+	templateUrl: "./app-component.html",
 })
-export class AppComponent {
-  title = 'e-songbook';
+export class AppComponent implements OnInit {
+	title = "e-songbook";
+	ngOnInit() {
+		console.log(JSON.stringify(data));
+	}
 }
